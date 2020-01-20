@@ -14,16 +14,17 @@ public class MineSweeper_Board extends IBoard
   private int mNotMine;
   private static final int BOARD_ROWS = 9;
   private static final int BOARD_COLUMNS = 9;
-  private String[][] mBoard;
+  private int mDifficulty;
 
   /**
    * Initializes MineSweeper_Board using parameter list values
    *
    * @param difficulty the difficulty of this minesweeper game
    */
-
   public MineSweeper_Board (int difficulty)
   {
+    super (BOARD_ROWS, BOARD_COLUMNS);
+    mDifficulty = difficulty;
     initializeBoard (difficulty);
   }
 
@@ -99,28 +100,6 @@ public class MineSweeper_Board extends IBoard
   }
 
   /**
-   * Checks if the input position is within the board boundaries
-   *
-   * @param x the row of the board
-   * @param y the column of the board
-   * @return true if input position is within the board, false if not
-   */
-  public boolean withinBoard (int x, int y)
-  {
-    return (x >= 0 && x < BOARD_ROWS) && (y >= 0 && y < BOARD_COLUMNS);
-  }
-
-  /**
-   * Get the minesweeper board
-   *
-   * @return The minesweeper board
-   */
-  public String[][] getBoard ()
-  {
-    return mBoard;
-  }
-
-  /**
    * Initialize the minesweeper board based on the given difficulty
    *
    * @param difficulty the difficulty of this minesweeper game
@@ -132,25 +111,26 @@ public class MineSweeper_Board extends IBoard
     final int totalCells = BOARD_COLUMNS * BOARD_ROWS;
     mNotMine = totalCells - mines;
     mbCantUpdate = new boolean[BOARD_ROWS][BOARD_COLUMNS];
-    mBoard = new String[BOARD_ROWS][BOARD_COLUMNS];
 
-    for (int i = 0; i < mBoard.length; i++)
+    for (int i = 0; i < BOARD_ROWS; i++)
     {
-      for (int j = 0; j < mBoard[0].length; j++)
+      for (int j = 0; j < BOARD_COLUMNS; j++)
       {
         setCell (i, j, ".");
       }
     }
 
+    Random random = new Random();
+    random.setSeed (0);
     //place mines on board
     while (mines > 0)
     {
-      int x = new Random ().nextInt (BOARD_ROWS);
-      int y = new Random ().nextInt (BOARD_COLUMNS);
+      int row = random.nextInt (BOARD_ROWS);
+      int column = random.nextInt (BOARD_COLUMNS);
 
-      if (!isMine (x, y))
+      if (!isMine (column, row))
       {
-        setCell (x, y, "@");
+        setCell (column, row, "@");
         mines--;
       }
     }
@@ -258,30 +238,6 @@ public class MineSweeper_Board extends IBoard
   }
 
   /**
-   * Get the cell at the input position
-   *
-   * @param x the row of the board
-   * @param y the column of the board
-   * @return The cell at the input position
-   */
-  private String getCell (int x, int y)
-  {
-    return mBoard[x][y];
-  }
-
-  /**
-   * Sets the cell at the given position to be the given cell type
-   *
-   * @param x the row of the board
-   * @param y the column of the board
-   * @param cellType the cell type we want to set at the input position
-   */
-  private void setCell (int x, int y, String cellType)
-  {
-    mBoard[x][y] = cellType;
-  }
-
-  /**
    * Checks if the cell at the input position is a mine
    *
    * @param x the row of the board
@@ -292,4 +248,12 @@ public class MineSweeper_Board extends IBoard
   {
     return getCell (x, y).equals ("@");
   }
+
+  /**
+   * Resets the minesweeper board (to it's current difficulty)
+   */
+  public void resetBoard() {
+    initializeBoard (mDifficulty);
+  }
 }
+
