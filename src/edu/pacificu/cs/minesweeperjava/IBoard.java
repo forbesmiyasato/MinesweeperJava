@@ -1,8 +1,8 @@
 package edu.pacificu.cs.minesweeperjava;
 
 /**
- * Creates a IBoard abstract class which provides an interface
- * for different boards
+ * Creates a IBoard abstract class which provides an interface and reusable
+ * methods for different boards
  *
  * @author Forbes Miyasato
  */
@@ -16,7 +16,7 @@ public abstract class IBoard
   /**
    * Initializes IBoard using parameter list values
    *
-   * @param rows The number of rows the board has
+   * @param rows    The number of rows the board has
    * @param columns The number of columns the board has
    */
   IBoard (int rows, int columns)

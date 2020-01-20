@@ -9,8 +9,7 @@ package edu.pacificu.cs.minesweeperjava;
 
 public class MineSweeper_Model
 {
-  private MineSweeper_Board mpcBoard;
-
+  private MineSweeper_Board mcBoard;
 
   /**
    * Checks if the user won the game
@@ -19,7 +18,7 @@ public class MineSweeper_Model
    */
   public boolean checkUserWin ()
   {
-    return mpcBoard.checkUserWin ();
+    return mcBoard.checkUserWin ();
   }
 
   /**
@@ -33,11 +32,11 @@ public class MineSweeper_Model
    */
   public int updateBoard (int x, int y)
   {
-    if (!mpcBoard.validUpdate (x, y))
+    if (!mcBoard.validUpdate (x, y))
     {
       return 0; //The update position is invalid
     }
-    else if (mpcBoard.updateBoard (x, y))
+    else if (mcBoard.updateBoard (x, y))
     {
       return -1; //User lost on update
     }
@@ -52,7 +51,7 @@ public class MineSweeper_Model
    */
   public String[][] getBoard ()
   {
-    return mpcBoard.getBoard ();
+    return mcBoard.getBoard ();
   }
 
   /**
@@ -62,13 +61,14 @@ public class MineSweeper_Model
    */
   public void initializeBoard (int difficulty)
   {
-    mpcBoard = new MineSweeper_Board (difficulty);
+    mcBoard = new MineSweeper_Board (difficulty);
   }
 
   /**
    * Resets the board for the minesweeper game
    */
-  public void resetBoard () {
-    mpcBoard.resetBoard ();
+  public void resetBoard ()
+  {
+    mcBoard.resetBoard ();
   }
 }

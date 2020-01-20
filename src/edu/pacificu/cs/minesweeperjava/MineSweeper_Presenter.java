@@ -14,7 +14,7 @@ public class MineSweeper_Presenter
   /**
    * Initializes MineSweeper_Presenter using parameter list values
    *
-   * @param cView the view used for this minesweeper game
+   * @param cView  the view used for this minesweeper game
    * @param cModel the minesweeper model
    */
   public MineSweeper_Presenter (IMineSweeper_View cView,
@@ -31,20 +31,22 @@ public class MineSweeper_Presenter
    * @param x the row of the board
    * @param y the column of the board
    * @return true if the user made an normal update on selected cell, false
-   *         if selection resulted in user losing, winning or invalid
-   *         selection
+   * if selection resulted in user losing, winning or invalid selection
    */
   public boolean UserSelectedCell (int x, int y)
   {
     //response = -1 if user lost, response = 0 if user selected an invalid
-    //position, response = 1 if user won
+    //position, response = 1 if updated successfully
+    final int USER_WON = -1;
+    final int INVALID_POSITION = 0;
+
     int response = mcModel.updateBoard (x, y);
-    if (response == -1)
+    if (response == USER_WON)
     {
       mcView.userLost ();
       return false;
     }
-    else if (response == 0)
+    else if (response == INVALID_POSITION)
     {
       mcView.invalidPosition ();
       return false;
@@ -71,9 +73,10 @@ public class MineSweeper_Presenter
   }
 
   /**
-   * Resets the minesweeper game
+   * Resets the minesweeper game (Used for Android)
    */
-  public void resetGame () {
+  public void resetGame ()
+  {
     mcModel.resetBoard ();
     mcView.setBoard (mcModel.getBoard ());
   }

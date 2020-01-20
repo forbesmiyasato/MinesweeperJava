@@ -31,7 +31,7 @@ public class MineSweeper_Board extends IBoard
   /**
    * Updates the minesweeper board, if cell at the input position is a mine
    * it'll terminate the game, if isn't mine and has adjacent mines then
-   * change current cell into adjacent mine counts, if isn't mine and doensn't
+   * change current cell into adjacent mine counts, if isn't mine and doesn't
    * have adjacent mines then recurse on all adjacent cells.
    *
    * @param x the row of the board
@@ -40,6 +40,7 @@ public class MineSweeper_Board extends IBoard
    */
   public boolean updateBoard (int x, int y)
   {
+    final String EMPTY_CELL = " ";
     int adjacentMines;
     if (isMine (x, y))
     {
@@ -61,7 +62,7 @@ public class MineSweeper_Board extends IBoard
     {
       //If current cell has no adjacent mines, set the cell to blank
       //and recurse on all adjacent cells.
-      setCell (x, y, " ");
+      setCell (x, y, EMPTY_CELL);
       if (validUpdate (x + 1, y) && !isMine (x + 1, y))
       {
         updateBoard (x + 1, y); //up
@@ -107,6 +108,8 @@ public class MineSweeper_Board extends IBoard
   public void initializeBoard (int difficulty)
   {
     final int difficultyIncrement = 3;
+    final String COVERED_CELL = ".";
+    final String BOMB_CELL = "@";
     int mines = BOARD_ROWS + (difficultyIncrement * difficulty);
     final int totalCells = BOARD_COLUMNS * BOARD_ROWS;
     mNotMine = totalCells - mines;
@@ -116,11 +119,11 @@ public class MineSweeper_Board extends IBoard
     {
       for (int j = 0; j < BOARD_COLUMNS; j++)
       {
-        setCell (i, j, ".");
+        setCell (i, j, COVERED_CELL);
       }
     }
 
-    Random random = new Random();
+    Random random = new Random ();
     random.setSeed (0);
     //place mines on board
     while (mines > 0)
@@ -130,7 +133,7 @@ public class MineSweeper_Board extends IBoard
 
       if (!isMine (column, row))
       {
-        setCell (column, row, "@");
+        setCell (column, row, BOMB_CELL);
         mines--;
       }
     }
@@ -252,7 +255,8 @@ public class MineSweeper_Board extends IBoard
   /**
    * Resets the minesweeper board (to it's current difficulty)
    */
-  public void resetBoard() {
+  public void resetBoard ()
+  {
     initializeBoard (mDifficulty);
   }
 }

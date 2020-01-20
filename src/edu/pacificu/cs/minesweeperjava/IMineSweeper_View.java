@@ -1,8 +1,7 @@
 package edu.pacificu.cs.minesweeperjava;
 
 /**
- * Creates a IMineSweeper abstract class which provides an interface
- * for Minesweeper views
+ * View interface IMineSweeper for Minesweeper views
  *
  * @author Forbes Miyasato
  */
@@ -10,7 +9,11 @@ package edu.pacificu.cs.minesweeperjava;
 public interface IMineSweeper_View
 {
 
+  /**
+   * Main Loop for the game.
+   */
   void eventLoop ();
+
   /**
    * Sets the game state to user lost
    */
