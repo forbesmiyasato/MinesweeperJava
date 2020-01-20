@@ -9,11 +9,13 @@ import java.util.Scanner;
  *
  * @author Forbes Miyasato
  */
-public class MineSweeper_View_TextUI extends IMineSweeper_View
+public class MineSweeper_View_TextUI implements IMineSweeper_View
 {
-  private String[][] mpBoard;
-  private MineSweeper_Presenter mpcPresenter;
-  private Scanner scanner; //scanner to get user input
+  private String[][] mBoard;
+  private MineSweeper_Presenter mcPresenter;
+  private boolean mLost;
+  private boolean mWon;
+  private Scanner mScanner; //scanner to get user input
 
   /**
    * Initializes The MineSweeper_View_TextUI for this minesweeper game
@@ -21,7 +23,7 @@ public class MineSweeper_View_TextUI extends IMineSweeper_View
   public MineSweeper_View_TextUI ()
   {
     MineSweeper_Model cModel = new MineSweeper_Model ();
-    mpcPresenter = new MineSweeper_Presenter (this, cModel);
+    mcPresenter = new MineSweeper_Presenter (this, cModel);
   }
 
   /**
@@ -39,14 +41,14 @@ public class MineSweeper_View_TextUI extends IMineSweeper_View
     System.out.print ("Enter X and Y Coordinate: ");
     try
     {
-      column = scanner.nextInt ();
-      row = scanner.nextInt ();
+      column = mScanner.nextInt ();
+      row = mScanner.nextInt ();
     } catch (InputMismatchException e)
     {
       System.out.println("Position must be integers!");
-      scanner.nextLine ();
+      mScanner.nextLine ();
     }
-    return (mpcPresenter.UserSelectedCell (row, column));
+    return (mcPresenter.UserSelectedCell (row, column));
   }
 
   /**
@@ -55,11 +57,11 @@ public class MineSweeper_View_TextUI extends IMineSweeper_View
    */
   public void eventLoop ()
   {
-    scanner = new Scanner (System.in);
+    mScanner = new Scanner (System.in);
     displayHeader ();
     enterDifficulty ();
     boolean printBoardNextLoop = true;
-    while (!mbLost && !mbWon)
+    while (!mLost && !mWon)
     {
       if (printBoardNextLoop)
       {
@@ -70,7 +72,7 @@ public class MineSweeper_View_TextUI extends IMineSweeper_View
     }
 
     printMessage ();
-    scanner.close ();
+    mScanner.close ();
   }
 
   /**
@@ -78,7 +80,7 @@ public class MineSweeper_View_TextUI extends IMineSweeper_View
    */
   public void userLost ()
   {
-    mbLost = true;
+    mLost = true;
   }
 
   /**
@@ -86,7 +88,7 @@ public class MineSweeper_View_TextUI extends IMineSweeper_View
    */
   public void userWon ()
   {
-    mbWon = true;
+    mWon = true;
   }
 
   /**
@@ -117,16 +119,16 @@ public class MineSweeper_View_TextUI extends IMineSweeper_View
       System.out.print ("(0 = EASY, 1 = MEDIUM, 2 = HARD): ");
       try
       {
-        difficulty = scanner.nextInt ();
+        difficulty = mScanner.nextInt ();
       }
       catch (InputMismatchException e)
       {
         System.out.println ("Difficulty must be an integer!");
         difficulty = -1; //Stay in loop
-        scanner.nextLine ();
+        mScanner.nextLine ();
       }
     } while (difficulty < 0 || difficulty > HIGHEST_DIFFICULTY);
-    mpcPresenter.setDifficulty (difficulty);
+    mcPresenter.setDifficulty (difficulty);
   }
 
   /**
@@ -136,7 +138,7 @@ public class MineSweeper_View_TextUI extends IMineSweeper_View
    */
   public void setBoard (String[][] board)
   {
-    mpBoard = board;
+    mBoard = board;
   }
 
   /**
@@ -146,18 +148,18 @@ public class MineSweeper_View_TextUI extends IMineSweeper_View
   {
     System.out.println ();
     System.out.println ("  0   1   2   3   4   5   6   7   8 ");
-    for (int i = 0; i < mpBoard.length; i++)
+    for (int i = 0; i < mBoard.length; i++)
     {
-      for (int j = 0; j < mpBoard[0].length; j++)
+      for (int j = 0; j < mBoard[0].length; j++)
       {
-        System.out.print ("  " + mpBoard[i][j]);
-        if (j != mpBoard.length - 1)
+        System.out.print ("  " + mBoard[i][j]);
+        if (j != mBoard.length - 1)
         {
           System.out.print ("|");
         }
       }
       System.out.println ("  " + i);
-      if (i != mpBoard.length - 1)
+      if (i != mBoard.length - 1)
       {
         System.out.println ("-----------------------------------");
       }
@@ -178,12 +180,12 @@ public class MineSweeper_View_TextUI extends IMineSweeper_View
    */
   public void printMessage ()
   {
-    if (mbWon)
+    if (mWon)
     {
       System.out.println ("Congratulations. You win.");
     }
 
-    else if (mbLost)
+    else if (mLost)
     {
       System.out.println ("Boooom!!! You lose.");
     }

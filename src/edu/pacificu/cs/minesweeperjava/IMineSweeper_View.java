@@ -7,28 +7,25 @@ package edu.pacificu.cs.minesweeperjava;
  * @author Forbes Miyasato
  */
 
-public abstract class IMineSweeper_View
+public interface IMineSweeper_View
 {
-  protected boolean mbLost;
-  protected boolean mbWon;
+  boolean UserSelectCell ();
 
-  abstract public boolean UserSelectCell ();
+  void eventLoop ();
 
-  abstract public void eventLoop ();
+  void userLost ();
 
-  abstract public void userLost ();
+  void userWon ();
 
-  abstract public void userWon ();
+  void displayHeader ();
 
-  abstract public void displayHeader ();
+  void enterDifficulty ();
 
-  abstract public void enterDifficulty ();
+  void setBoard (String[][] board);
 
-  abstract public void setBoard (String[][] board);
+  void printBoard ();
 
-  abstract public void printBoard ();
+  void printInvalidPosition ();
 
-  abstract public void printInvalidPosition ();
-
-  abstract public void printMessage ();
+  void printMessage ();
 }
