@@ -1,7 +1,5 @@
 package edu.pacificu.cs.minesweeperjava;
 
-import java.util.Scanner;
-
 /**
  * Creates a MineSweeper_Presenter class where all operations work on all
  * the presentation logic between the model and view
@@ -10,8 +8,8 @@ import java.util.Scanner;
  */
 public class MineSweeper_Presenter
 {
-  private IMineSweeper_View mpcView;
-  private MineSweeper_Model mpcModel;
+  private IMineSweeper_View mcView;
+  private MineSweeper_Model mcModel;
 
   /**
    * Initializes MineSweeper_Presenter using parameter list values
@@ -22,8 +20,8 @@ public class MineSweeper_Presenter
   public MineSweeper_Presenter (IMineSweeper_View cView,
       MineSweeper_Model cModel)
   {
-    mpcView = cView;
-    mpcModel = cModel;
+    mcView = cView;
+    mcModel = cModel;
   }
 
   /**
@@ -32,31 +30,32 @@ public class MineSweeper_Presenter
    *
    * @param x the row of the board
    * @param y the column of the board
-   * @return true if the view should print board after this user selection,
-   * false if shouldn't
+   * @return true if the user made an normal update on selected cell, false
+   *         if selection resulted in user losing, winning or invalid
+   *         selection
    */
   public boolean UserSelectedCell (int x, int y)
   {
     //response = -1 if user lost, response = 0 if user selected an invalid
     //position, response = 1 if user won
-    int response = mpcModel.updateBoard (x, y);
+    int response = mcModel.updateBoard (x, y);
     if (response == -1)
     {
-      mpcView.userLost ();
+      mcView.userLost ();
       return false;
     }
     else if (response == 0)
     {
-      mpcView.printInvalidPosition ();
+      mcView.invalidPosition ();
       return false;
     }
 
-    if (mpcModel.checkUserWin ())
+    if (mcModel.checkUserWin ())
     {
-      mpcView.userWon ();
+      mcView.userWon ();
       return false;
     }
-    mpcView.setBoard (mpcModel.getBoard ());
+    mcView.setBoard (mcModel.getBoard ());
     return true;
   }
 
@@ -67,7 +66,15 @@ public class MineSweeper_Presenter
    */
   public void setDifficulty (int difficulty)
   {
-    mpcModel.initializeBoard (difficulty);
-    mpcView.setBoard (mpcModel.getBoard ());
+    mcModel.initializeBoard (difficulty);
+    mcView.setBoard (mcModel.getBoard ());
+  }
+
+  /**
+   * Resets the minesweeper game
+   */
+  public void resetGame () {
+    mcModel.resetBoard ();
+    mcView.setBoard (mcModel.getBoard ());
   }
 }

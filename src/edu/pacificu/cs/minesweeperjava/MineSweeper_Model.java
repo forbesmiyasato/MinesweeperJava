@@ -64,4 +64,11 @@ public class MineSweeper_Model
   {
     mpcBoard = new MineSweeper_Board (difficulty);
   }
+
+  /**
+   * Resets the board for the minesweeper game
+   */
+  public void resetBoard () {
+    mpcBoard.resetBoard ();
+  }
 }

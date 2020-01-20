@@ -32,7 +32,7 @@ public class MineSweeper_View_TextUI implements IMineSweeper_View
    * selecting the cell
    *
    * @return true if the board should be printed after selecting the cell,
-   *         false if not
+   * false if not
    */
   public boolean UserSelectCell ()
   {
@@ -43,9 +43,10 @@ public class MineSweeper_View_TextUI implements IMineSweeper_View
     {
       column = mScanner.nextInt ();
       row = mScanner.nextInt ();
-    } catch (InputMismatchException e)
+    }
+    catch (InputMismatchException e)
     {
-      System.out.println("Position must be integers!");
+      System.out.println ("Position must be integers!");
       mScanner.nextLine ();
     }
     return (mcPresenter.UserSelectedCell (row, column));
@@ -60,18 +61,19 @@ public class MineSweeper_View_TextUI implements IMineSweeper_View
     mScanner = new Scanner (System.in);
     displayHeader ();
     enterDifficulty ();
-    boolean printBoardNextLoop = true;
+    printBoard ();
+
     while (!mLost && !mWon)
     {
-      if (printBoardNextLoop)
+      if (UserSelectCell ())
       {
         printBoard ();
       }
-
-      printBoardNextLoop = UserSelectCell ();
     }
 
+    printBoard ();
     printMessage ();
+
     mScanner.close ();
   }
 
@@ -99,6 +101,7 @@ public class MineSweeper_View_TextUI implements IMineSweeper_View
     System.out.println ("***********");
     System.out.println ("Minesweeper");
     System.out.println ("***********");
+    System.out.println ();
   }
 
   /**
@@ -148,6 +151,7 @@ public class MineSweeper_View_TextUI implements IMineSweeper_View
   {
     System.out.println ();
     System.out.println ("  0   1   2   3   4   5   6   7   8 ");
+    System.out.println ();
     for (int i = 0; i < mBoard.length; i++)
     {
       for (int j = 0; j < mBoard[0].length; j++)
@@ -158,7 +162,7 @@ public class MineSweeper_View_TextUI implements IMineSweeper_View
           System.out.print ("|");
         }
       }
-      System.out.println ("  " + i);
+      System.out.println ("   " + i);
       if (i != mBoard.length - 1)
       {
         System.out.println ("-----------------------------------");
@@ -170,7 +174,7 @@ public class MineSweeper_View_TextUI implements IMineSweeper_View
   /**
    * Prints message to tell the user they selected an invalid position
    */
-  public void printInvalidPosition ()
+  public void invalidPosition ()
   {
     System.out.println ("Invalid Position! Pick again!");
   }

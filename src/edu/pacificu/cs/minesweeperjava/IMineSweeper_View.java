@@ -9,23 +9,27 @@ package edu.pacificu.cs.minesweeperjava;
 
 public interface IMineSweeper_View
 {
-  boolean UserSelectCell ();
 
   void eventLoop ();
-
+  /**
+   * Sets the game state to user lost
+   */
   void userLost ();
 
+  /**
+   * Sets the game state to user won
+   */
   void userWon ();
 
-  void displayHeader ();
-
-  void enterDifficulty ();
-
+  /**
+   * Sets the Views game board
+   *
+   * @param board The game board to set to
+   */
   void setBoard (String[][] board);
 
-  void printBoard ();
-
-  void printInvalidPosition ();
-
-  void printMessage ();
+  /**
+   * Handles user selecting invalid position
+   */
+  void invalidPosition ();
 }
